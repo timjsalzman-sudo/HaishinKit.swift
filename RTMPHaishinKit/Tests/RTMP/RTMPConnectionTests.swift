@@ -1,9 +1,16 @@
 import Foundation
+import Network
 import Testing
 
 @testable import RTMPHaishinKit
 
 @Suite struct RTMPConnectionTests {
+    @Test func requiredInterfaceType() async {
+        #expect(await RTMPConnection().requiredInterfaceType == nil)
+        let connection = RTMPConnection(requiredInterfaceType: .cellular)
+        #expect(await connection.requiredInterfaceType == .cellular)
+    }
+
     @Test func releaseWhenClose() async throws {
         weak var weakConnection: RTMPConnection?
         _ = try? await {
